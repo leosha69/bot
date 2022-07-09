@@ -4,7 +4,7 @@ import (
 	"log"
 	"os"
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
-	cmd "github.com/leosha69/bot/cmdmybot"
+	cmd "bot/cmd"
     goenv "github.com/joho/godotenv"
 )
 
@@ -44,7 +44,16 @@ func main() {
 		msg := tgbotapi.NewMessage(update.Message.Chat.ID, "")
 
 		// Extract the command from the Message.
-		cmd.Cmd()
+		switch update.Message.Command() {
+		case "help":
+			msg.Text = "I understand /sayhi and /status."
+		case "sayhi":
+			msg.Text = "Hi :)"
+		case "status":
+			msg.Text = "I'm ok."
+		default:
+			msg.Text = "I don't know that command"
+		}
 
 		if _, err := bot.Send(msg); err != nil {
 			log.Panic(err)

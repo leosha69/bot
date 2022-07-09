@@ -4,6 +4,7 @@ import (
 	"log"
 	"os"
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
+	cmd "github.com/leosha69/bot/cmdmybot"
     goenv "github.com/joho/godotenv"
 )
 

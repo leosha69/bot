@@ -43,16 +43,7 @@ func main() {
 		msg := tgbotapi.NewMessage(update.Message.Chat.ID, "")
 
 		// Extract the command from the Message.
-		switch update.Message.Command() {
-		case "help":
-			msg.Text = "I understand /sayhi and /status."
-		case "sayhi":
-			msg.Text = "Hi :)"
-		case "status":
-			msg.Text = "I'm ok."
-		default:
-			msg.Text = "I don't know that command"
-		}
+		cmd.Cmd()
 
 		if _, err := bot.Send(msg); err != nil {
 			log.Panic(err)

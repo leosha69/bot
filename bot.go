@@ -4,8 +4,7 @@ import (
 	"log"
 	"os"
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
-	cmd "bot/cmd"
-    goenv "github.com/joho/godotenv"
+        goenv "github.com/joho/godotenv"
 )
 
 func init() {

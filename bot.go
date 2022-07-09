@@ -2,12 +2,21 @@ package main
 
 import (
 	"log"
+	"os"
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
-	cmd "cmd"
+    goenv "github.com/joho/godotenv"
 )
 
+func init() {
+    // loads values from .env into the system
+    if err := goenv.Load(); err != nil {
+        log.Print("No .env file found")
+    }
+}
+
 func main() {
-	bot, err := tgbotapi.NewBotAPI("5433221809:AAFoubVvGt5d5y9yFRCcBLWSrIs5KvOCwrY")
+    token, _ := os.LookupEnv("TOKEN")
+	bot, err := tgbotapi.NewBotAPI(token)
 	if err != nil {
 		log.Panic(err)
 	}
@@ -34,9 +43,19 @@ func main() {
 		msg := tgbotapi.NewMessage(update.Message.Chat.ID, "")
 
 		// Extract the command from the Message.
-		cmd.Cmd()		
+		switch update.Message.Command() {
+		case "help":
+			msg.Text = "I understand /sayhi and /status."
+		case "sayhi":
+			msg.Text = "Hi :)"
+		case "status":
+			msg.Text = "I'm ok."
+		default:
+			msg.Text = "I don't know that command"
+		}
 
-		if _, err := bot.Send(msg); err != nil {			log.Panic(err)
+		if _, err := bot.Send(msg); err != nil {
+			log.Panic(err)
 		}
 	}
 }
